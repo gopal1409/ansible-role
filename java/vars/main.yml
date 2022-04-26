@@ -1,2 +1,4 @@
 ---
 # vars file for java
+package: openjdk-11-jdk
+package2: ntp

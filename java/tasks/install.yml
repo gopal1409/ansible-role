@@ -6,8 +6,5 @@
   apt:
     name: "{{package}}"
     state: present
-  vars:
-    package:
-      - openjdk-11-jdk
       
 

@@ -1,0 +1,5 @@
+---
+- name: install ntp server
+  apt:
+    name: "{{package2}}"
+    state: present
