@@ -1,2 +1,3 @@
 ---
 # tasks file for java
+- import_task: install.yml
