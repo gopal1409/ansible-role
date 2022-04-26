@@ -1,0 +1,13 @@
+---
+- name: update my ubuntu system
+  apt:
+    update_cache: yes
+- name: install java package
+  apt:
+    name: "{{package}}"
+    state: present
+  vars:
+    package:
+      - openjdk-11-jdk
+      
+
