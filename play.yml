@@ -5,5 +5,5 @@
   
 #vars: variable that will apply to the playhjhhh
   roles:
-    - java
+          #- java
     - tomcat
