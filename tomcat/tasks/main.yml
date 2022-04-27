@@ -1,2 +1,41 @@
 ---
 # tasks file for tomcat
+- name: add group "tomcat"
+  group: name=tomcat 
+- name: add user "tomcat"
+  user: name=tomcat group=tomcat home=/usr/share/tomcat createhome=no
+  become: True 
+  become_method: sudo 
+- name: download tomcat 
+  geturl:
+    url: "{{ tomcat_download_url }}"
+    dest: "{{ tomcat_download_location }}"
+- name: create a tomcat directory
+  file:
+    path: /usr/share/tomcat 
+    state: directory #file hard link #link #touch 
+    owner: tomcat 
+    group: tomcat 
+- name: extract tomcat archive 
+  unarchive: 
+    src: "{{ tomcat_download_location }}"
+    dest: /usr/share/tomcat 
+    owner: tomcat 
+    group: tomcat 
+    remote_src: yes
+    extra_opts: "--stripe-components=1" #it will skip creating the first directory
+    create: /usr/share/tomcat/bin 
+- name: copy tomcat service file 
+  template:
+    src: templates/tomcat.service.j2 
+    dest: /etc/systemd/system/tomcat.service
+  when: ansible_service_mgr == "systemd"
+- name: start and enable tomcat 
+  service: 
+    daemon_reload: yes
+    name: tomcat 
+    state: started 
+    enabled: yes 
+  when: ansible_service_mgr == "systemd"
+  
+
